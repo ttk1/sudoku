@@ -1,0 +1,26 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "description": "数独の何か",
+  "scripts": {
+    "start": "ts-node ./src/main.ts",
+    "lint": "eslint . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ttk1/sudoku.git"
+  },
+  "author": "tama@ttk1.net",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^6.6.0",
+    "ts-loader": "^6.2.1"
+  },
+  "dependencies": {
+    "ts-node": "^8.5.2",
+    "typescript": "^3.7.2"
+  }
+}

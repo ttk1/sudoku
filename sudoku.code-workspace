@@ -1,0 +1,13 @@
+{
+	"folders": [{
+		"path": "."
+	}],
+	"settings": {
+		"terminal.integrated.env.windows": {
+			"PATH": "${env:PATH};${workspaceRoot}\\node_modules\\.bin"
+		},
+		"git.ignoreLimitWarning": true,
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"editor.tabSize": 2
+	}
+}
