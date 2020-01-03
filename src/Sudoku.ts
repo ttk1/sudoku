@@ -1,3 +1,5 @@
+import fs = require('fs');
+
 export class Sudoku {
   private field: number[][];
 
@@ -6,7 +8,7 @@ export class Sudoku {
   }
 
   public set(i: number, j: number, value: number) {
-    if (this.check(i, j, value)) {
+    if (value == null || this.check(i, j, value)) {
       this.field[i][j] = value;
       return true;
     } else {
@@ -93,7 +95,7 @@ export class Sudoku {
 
   public solve() {
     const f = () => {
-      const c: {i: number; j: number; candidates: number[]}[] = [];
+      const c: { i: number; j: number; candidates: number[] }[] = [];
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
           if (this.get(i, j) == null) {
@@ -134,9 +136,22 @@ export class Sudoku {
   /*
   public lock() {
   }
-  public load(path: string) {
-  }
   */
+
+  public load(path: string) {
+    const s = fs.readFileSync(path, 'utf-8');
+    let i = 0;
+    for (const l of s.split('\n')) {
+      let j = 0;
+      for (const c of l.split(' ')) {
+        if (/^[1-9]$/.test(c)) {
+          this.set(i, j, Number(c));
+        }
+        j++;
+      }
+      i++;
+    }
+  }
 
   public print() {
     console.log('    0 1 2   3 4 5   6 7 8');
