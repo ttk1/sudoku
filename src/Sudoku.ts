@@ -83,16 +83,26 @@ export class Sudoku {
   */
 
   public print() {
+    console.log('    0 1 2   3 4 5   6 7 8');
+    console.log('  ┌───────┬───────┬───────┐');
     for (let i = 0; i < 9; i++) {
-      let line = '';
+      if (i === 3 || i === 6) {
+        console.log('  ├───────┼───────┼───────┤');
+      }
+      let line = String(i) + ' │';
       for (let j = 0; j < 9; j++) {
+        if (j === 3 || j === 6) {
+          line += ' │';
+        }
         if (this.field[i][j] == null) {
-          line += '□ ';
+          line += ' -';
         } else {
-          line += String(this.field[i][j]) + ' ';
+          line += ' ' + String(this.field[i][j]);
         }
       }
+      line += ' │';
       console.log(line);
     }
+    console.log('  └───────┴───────┴───────┘');
   }
 }

@@ -19,6 +19,7 @@
     "SharedArrayBuffer": "readonly"
   },
   "rules": {
+    "eqeqeq": ["warn", "smart"],
     "@typescript-eslint/quotes": ["warn", "single"],
     "@typescript-eslint/semi": "error",
     "eol-last": "warn",
