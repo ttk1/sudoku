@@ -2,9 +2,21 @@
 
 ## デモ
 
-```
-> ts-node ./src/main.ts
+```sh
+> cat ./src/demo.ts
+import { Sudoku } from './Sudoku';
 
+const sudoku = new Sudoku();
+
+console.log(sudoku.set(6, 7, 8));
+console.log(sudoku.set(7, 8, 8)); // -> 値のセット失敗
+console.log(sudoku.set(8, 7, 6));
+sudoku.print();
+
+console.log(sudoku.solve());
+sudoku.print();
+
+> ts-node ./src/demo.ts
 true
 false
 true
@@ -22,6 +34,7 @@ true
 7 │ - - - │ - - - │ - - - │
 8 │ - - - │ - - - │ - 6 - │
   └───────┴───────┴───────┘
+true
     0 1 2   3 4 5   6 7 8
   ┌───────┬───────┬───────┐
 0 │ 2 3 6 │ 7 8 9 │ 4 1 5 │
@@ -36,4 +49,5 @@ true
 7 │ 7 6 8 │ 4 1 3 │ 5 9 2 │
 8 │ 3 5 1 │ 8 9 2 │ 7 6 4 │
   └───────┴───────┴───────┘
+
 ```

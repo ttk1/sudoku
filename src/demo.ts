@@ -7,5 +7,5 @@ console.log(sudoku.set(7, 8, 8)); // -> 値のセット失敗
 console.log(sudoku.set(8, 7, 6));
 sudoku.print();
 
-sudoku.solve();
+console.log(sudoku.solve());
 sudoku.print();
