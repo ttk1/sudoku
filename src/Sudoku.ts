@@ -133,10 +133,9 @@ export class Sudoku {
     return f();
   }
 
-  /*
-  public lock() {
+  private lock() {
+    throw new Error('未実装やで！');
   }
-  */
 
   public load(path: string) {
     this.reset();
@@ -172,6 +171,16 @@ export class Sudoku {
       }
     }
     fs.writeFileSync(path, data, 'utf8');
+  }
+
+  public copy() {
+    const copied = new Sudoku();
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        copied.set(i, j, this.get(i, j));
+      }
+    }
+    return copied;
   }
 
   public print() {

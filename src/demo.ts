@@ -8,4 +8,4 @@ sudoku.print();
 //sudoku.solve();
 //sudoku.print();
 
-sudoku.save('./problems/02.txt');
+sudoku.copy().save('./problems/02.txt');
