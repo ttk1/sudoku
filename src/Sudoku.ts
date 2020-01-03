@@ -6,12 +6,10 @@ export class Sudoku {
   }
 
   public set(i: number, j: number, value: number): boolean {
-    const tmp = this.field[i][j];
-    this.field[i][j] = value;
-    if (this.check(i, j)) {
+    if (this.check(i, j, value)) {
+      this.field[i][j] = value;
       return true;
     } else {
-      this.field[i][j] = tmp;
       return false;
     }
   }
@@ -30,47 +28,37 @@ export class Sudoku {
     }
   }
 
-  private check(i: number, j: number): boolean {
-    // 行のチェック
-    const s = new Set();
+  private check(i: number, j: number, value: number): boolean {
+    // 列
     for (let k = 0; k < 9; k++) {
-      const value = this.field[i][k];
-      if (value == null) {
+      if (k === i) {
         continue;
-      } else if (s.has(value)) {
+      }
+      if (this.field[k][j] === value) {
         return false;
-      } else {
-        s.add(value);
       }
     }
 
-    // 列のチェック
-    s.clear();
+    // 行
     for (let k = 0; k < 9; k++) {
-      const value = this.field[k][j];
-      if (value == null) {
+      if (k === j) {
         continue;
-      } else if (s.has(value)) {
+      }
+      if (this.field[i][k] === value) {
         return false;
-      } else {
-        s.add(value);
       }
     }
 
-    // グループのチェック
-    s.clear();
-    i -= i % 3;
-    j -= j % 3;
+    // block
     for (let k = 0; k < 9; k++) {
-      const value = this.field[i + Math.floor(k / 3)][j + k % 3];
-      if (value == null) {
+      if (Math.floor(k / 3) === i % 3 && k % 3 === j % 3) {
         continue;
-      } else if (s.has(value)) {
+      }
+      if (this.field[i - i % 3 + Math.floor(k / 3)][j - j % 3 + k % 3] === value) {
         return false;
-      } else {
-        s.add(value);
       }
     }
+
     return true;
   }
 
