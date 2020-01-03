@@ -139,7 +139,7 @@ export class Sudoku {
   */
 
   public load(path: string) {
-    const s = fs.readFileSync(path, 'utf-8');
+    const s = fs.readFileSync(path, 'utf8');
     let i = 0;
     for (const l of s.split('\n')) {
       let j = 0;
@@ -151,6 +151,16 @@ export class Sudoku {
       }
       i++;
     }
+  }
+
+  public save(path: string) {
+    fs.writeFileSync(path,
+      this.field.map(row =>
+        row.map(value =>
+          value == null ? '-' : String(value)
+        ).join(' ')
+      ).join('\n'),
+      'utf8');
   }
 
   public print() {
