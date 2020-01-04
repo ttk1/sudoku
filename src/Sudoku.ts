@@ -93,48 +93,74 @@ export class Sudoku {
     return candidates;
   }
 
-  public solve() {
-    const f = () => {
-      const c: { i: number; j: number; candidates: number[] }[] = [];
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          if (this.get(i, j) == null) {
-            c.push({
-              i: i,
-              j: j,
-              candidates: this.getCandidates(i, j)
-            });
-          }
-        }
-      }
-
-      // cの長さが0なら、解けた
-      if (c.length === 0) {
-        return true;
-      }
-
-      // 候補の数が少ない順にソート
-      c.sort((a, b) => {
-        return a.candidates.length - b.candidates.length;
-      });
-
-      // 候補を順に試す
-      const i = c[0].i;
-      const j = c[0].j;
-      const tmp = this.get(i, j);
-      for (const value of c[0].candidates) {
-        if (this.set(i, j, value) && f()) {
-          return true;
-        }
-      }
-      this.set(i, j, tmp);
-      return false;
-    };
-    return f();
-  }
-
   private lock() {
     throw new Error('未実装やで！');
+  }
+
+  public solve() {
+    const c: { i: number; j: number; candidates: number[] }[] = [];
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (this.get(i, j) == null) {
+          c.push({ i: i, j: j, candidates: this.getCandidates(i, j) });
+        }
+      }
+    }
+
+    if (c.length === 0) {
+      return true;
+    }
+
+    c.sort((a, b) => {
+      return a.candidates.length - b.candidates.length;
+    });
+
+    const orig = this.get(c[0].i, c[0].j);
+    for (const value of c[0].candidates) {
+      this.set(c[0].i, c[0].j, value);
+      if (this.solve()) {
+        return true;
+      }
+    }
+    this.set(c[0].i, c[0].j, orig);
+    return false;
+  }
+
+  private getNumberOfSolutions(limit: number) {
+    const c: { i: number; j: number; candidates: number[] }[] = [];
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (this.get(i, j) == null) {
+          c.push({ i: i, j: j, candidates: this.getCandidates(i, j) });
+        }
+      }
+    }
+
+    if (c.length === 0) {
+      return 1;
+    }
+
+    c.sort((a, b) => {
+      return a.candidates.length - b.candidates.length;
+    });
+
+    const orig = this.get(c[0].i, c[0].j);
+    let count = 0;
+    for (const value of c[0].candidates) {
+      this.set(c[0].i, c[0].j, value);
+      count += this.getNumberOfSolutions(limit - count);
+      if (count >= limit) {
+        break;
+      }
+    }
+    this.set(c[0].i, c[0].j, orig);
+    return count;
+  }
+
+  // ランダムに盤面を生成
+  // オプションで難易度設定とかも実装したい
+  public random() {
+    //
   }
 
   public load(path: string) {
