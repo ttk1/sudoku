@@ -1,5 +1,15 @@
 import fs = require('fs');
 
+// Fisher–Yates shuffle
+function shuffle<A>(a: A[]) {
+  for (let i = a.length - 1; i >= 1; i--) {
+    const j = Math.floor(Math.random() * i) + 1;
+    const tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+}
+
 export class Sudoku {
   private field: number[][];
 
@@ -160,7 +170,26 @@ export class Sudoku {
   // ランダムに盤面を生成
   // オプションで難易度設定とかも実装したい
   public random() {
-    //
+    this.reset();
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (this.get(i, j) == null) {
+          const candidates = this.getCandidates(i, j);
+          shuffle(candidates);
+          for (const value of candidates) {
+            this.set(i, j, value);
+            switch(this.getNumberOfSolutions(2)) {
+              case 0:
+                continue;
+              case 1:
+                return;
+              default:
+                break;
+            }
+          }
+        }
+      }
+    }
   }
 
   public load(path: string) {
