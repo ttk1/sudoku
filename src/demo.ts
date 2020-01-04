@@ -2,13 +2,8 @@ import { Sudoku } from './Sudoku';
 
 const sudoku = new Sudoku();
 
-/*
-sudoku.load('./problems/01.txt');
+sudoku.random();
 sudoku.print();
 
 sudoku.solve();
-sudoku.print();
-*/
-
-sudoku.random();
 sudoku.print();

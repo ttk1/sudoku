@@ -3,7 +3,7 @@ import fs = require('fs');
 // Fisher–Yates shuffle
 function shuffle<A>(a: A[]) {
   for (let i = a.length - 1; i >= 1; i--) {
-    const j = Math.floor(Math.random() * i) + 1;
+    const j = Math.floor(Math.random() * (i + 1));
     const tmp = a[i];
     a[i] = a[j];
     a[j] = tmp;
@@ -178,16 +178,21 @@ export class Sudoku {
           shuffle(candidates);
           for (const value of candidates) {
             this.set(i, j, value);
-            switch(this.getNumberOfSolutions(2)) {
-              case 0:
-                continue;
-              case 1:
-                return;
-              default:
-                break;
+            if (this.getNumberOfSolutions(1) > 0) {
+              break;
             }
           }
         }
+      }
+    }
+    // あとで書き直す
+    for (let k = 0; k < 200; k++) {
+      const i = Math.floor(Math.random() * 9);
+      const j = Math.floor(Math.random() * 9);
+      const orig = this.get(i, j);
+      this.set(i, j, null);
+      if (this.getNumberOfSolutions(2) === 2) {
+        this.set(i, j, orig);
       }
     }
   }
