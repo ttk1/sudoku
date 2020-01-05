@@ -18,7 +18,7 @@ export class Sudoku {
   }
 
   public set(i: number, j: number, value: number) {
-    if (value == null || this.check(i, j, value)) {
+    if (value == null || this.getCandidates(i, j).includes(value)) {
       this.field[i][j] = value;
       return true;
     } else {
@@ -38,37 +38,6 @@ export class Sudoku {
         this.field[i][j] = null;
       }
     }
-  }
-
-  private check(i: number, j: number, value: number) {
-    for (let k = 0; k < 9; k++) {
-      if (k === i) {
-        continue;
-      }
-      if (this.get(k, j) === value) {
-        return false;
-      }
-    }
-
-    for (let k = 0; k < 9; k++) {
-      if (k === j) {
-        continue;
-      }
-      if (this.get(i, k) === value) {
-        return false;
-      }
-    }
-
-    for (let k = 0; k < 9; k++) {
-      if (Math.floor(k / 3) === i % 3 && k % 3 === j % 3) {
-        continue;
-      }
-      if (this.get(i - i % 3 + Math.floor(k / 3), j - j % 3 + k % 3) === value) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   private getCandidates(i: number, j: number) {
