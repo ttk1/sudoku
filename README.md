@@ -73,7 +73,6 @@ sudoku.solve();
 sudoku.print();
 
 > ts-node ./src/demo.ts
-> ts-node ./src/demo.ts
 
     0 1 2   3 4 5   6 7 8
   ┌───────┬───────┬───────┐
